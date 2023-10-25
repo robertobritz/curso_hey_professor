@@ -26,11 +26,13 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Installing package.json
-      run: npm run install
+        
+    - name: Installing Package.json
+      run: npm install
       
     - name: Build Assets
       run: npm run build
+        
     - name: Execute tests (Unit and Feature tests) via PEST
       env:
         DB_CONNECTION: sqlite
@@ -39,6 +41,9 @@ jobs:
       
     - name: Execute Larastan
       run: vendor/bin/phpstan analyse
+      
+    - name: Execute Laravel Pint
+      run: vendor/bin/pint --test
       
     - name: Execute Laravel Pint
       run: vendor/bin/pint --test
