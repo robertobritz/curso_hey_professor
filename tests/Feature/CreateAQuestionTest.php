@@ -24,6 +24,19 @@ it('Should be able to create a new question bigger than 255 caracters', function
 
 // });
 
-// it('Should have at least 10 characters', function(){
+it('Should have at least 10 characters', function () {
+    // Arrange :: preparar
+    $user = User::factory()->create();
+    actingAs($user); // Vou logar esse meu fake usuário
 
-// });
+    // Act :: agir
+    $request = post(route('question.store'), [
+        'question' => str_repeat('*', 8) . '?',
+    ]);
+
+    // Assert :: verificar
+    //$request->assertSessionHasErrors(['question' => 'min']);
+    $request->assertSessionHasErrors(['question' => __('validation.min.string', ['min' => 10, 'attribute' => 'question'])]); // __ é um helper de lang, ai passa todas as chaves relacionadas a ela.
+    assertDatabaseCount('questions', 0);
+
+});
