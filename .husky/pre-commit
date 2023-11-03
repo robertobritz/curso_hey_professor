@@ -10,7 +10,7 @@ fi;
 
 # rodar os testes
 # php artisan test --parallel | php #seria o padrão, mas como estou usando o sail, tem que ser o comando a baixo
-sail artisan test --parallel | php
+php artisan test --parallel | php
 if [ $? -ne 0 ]; then
     echo "Opa! Deu ruim aqui com algum teste. Arrume antes de continuar... 😉";
     exit 1;
