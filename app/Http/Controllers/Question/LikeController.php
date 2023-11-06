@@ -10,7 +10,7 @@ class LikeController extends Controller
 {
     public function __invoke(Question $question): RedirectResponse
     {
-        auth()->user()->like($question);
+        user()->like($question); // Criada uma function em app\suppor\functions para retornar o usuário logado com o user(), adicionado caminho no composer.json
 
         return back();
     }
