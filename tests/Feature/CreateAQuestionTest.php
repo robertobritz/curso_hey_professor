@@ -20,6 +20,22 @@ it('Should be able to create a new question bigger than 255 caracters', function
     assertDatabaseHas('questions', ['question' => str_repeat('*', 260) . '?']);
 });
 
+it('Should create as a draft all the time', function () {
+    // Arrange :: preparar
+    $user = User::factory()->create();
+    actingAs($user); // Vou logar esse meu fake usuário
+
+    // Act :: agir
+    $request = post(route('question.store'), [
+        'question' => str_repeat('*', 260) . '?',
+    ]);
+
+    // Assert :: verificar
+    assertDatabaseHas('questions', [
+        'question' => str_repeat('*', 260) . '?',
+        'draft'    => true]);
+});
+
 it('Should check if ends with question mak ?', function () {
 
     // Arrange :: preparar
