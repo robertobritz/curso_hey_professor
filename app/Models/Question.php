@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 class Question extends Model
 {
@@ -12,6 +12,11 @@ class Question extends Model
     //Adicionado no App Provider
     //protected $guarded = []; // libera a o massa assign de todos os campos.
     //protected $fillable = ['question']; // libera somente o item espessífico
+
+    protected $casts = [
+        'draft' => 'bool',
+    ];
+
     /**
      * @return HasMany<Vote>
      */
@@ -20,4 +25,8 @@ class Question extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
