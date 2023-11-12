@@ -11,9 +11,10 @@ class QuestionPolicy
         return $question->createdBy->is($user);
     }
 
-    public function update(User $user, Question $question): bool
+    public function update(User $me, Question $question): bool
     {
-        return $question->draft;
+        return $question->draft
+            && $question->createdBy->is($me);
     }
 
     public function destroy(User $user, Question $question): bool
