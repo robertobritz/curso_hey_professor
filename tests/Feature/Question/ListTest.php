@@ -46,10 +46,10 @@ it('should order by like and unlike, most liked question should be at the top, m
     $secondUser = User::factory()->create();
     Question::factory()->count(5)->create();
     //dd(Question::all());
-    $mostLikedQuestion = Question::find(28);
+    $mostLikedQuestion = Question::find(3);
     $user->like($mostLikedQuestion);
 
-    $mostUnlikedQuestion = Question::find(30);
+    $mostUnlikedQuestion = Question::find(1);
     $secondUser->unlike($mostUnlikedQuestion);
 
     actingAs($user);
@@ -57,9 +57,9 @@ it('should order by like and unlike, most liked question should be at the top, m
         ->assertViewHas('questions', function ($questions) {
 
             expect($questions)
-                ->first()->id->toBe(28)
+                ->first()->id->toBe(3)
                 ->and($questions)
-                ->last()->id->toBe(30);
+                ->last()->id->toBe(1);
 
             return true;
         });
