@@ -13,14 +13,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard'); // Sem passar o método, afirmamos que é um controlador de função única
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard'); // Sem passar o método, afirmamos que é um controlador de função única
 
-Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
-Route::post('/question/like/{question}', Question\LikeController::class)->name('question.like');
-Route::post('/question/unlike/{question}', Question\UnlikeController::class)->name('question.unlike');
-Route::put('/question/publish/{question}', Question\PublishController::class)->name('question.publish');
+    Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
+    Route::post('/question/like/{question}', Question\LikeController::class)->name('question.like');
+    Route::post('/question/unlike/{question}', Question\UnlikeController::class)->name('question.unlike');
+    Route::put('/question/publish/{question}', Question\PublishController::class)->name('question.publish');
 
-Route::middleware('auth')->group(function () {
     #region Question Routes
     Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
     Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');

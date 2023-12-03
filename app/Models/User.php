@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasMany};
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,35 +15,19 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password'          => 'hashed',
     ];
 
     /**
@@ -61,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function like(Question $question): void
     {
-        $this->votes()->updateOrCreate( // Atualiza, se não tiver como atualizar cria.
+        $this->votes()->updateOrCreate(
             ['question_id' => $question->id],
             [
                 'like'   => 1,
@@ -72,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function unlike(Question $question): void
     {
-        $this->votes()->updateOrCreate( // Atualiza, se não tiver como atualizar cria.
+        $this->votes()->updateOrCreate(
             ['question_id' => $question->id],
             [
                 'like'   => 0,
