@@ -29,7 +29,6 @@ it('should order by like and unlike, most liked question should be at the top, m
         });
 });
 
-
 it('should list all the quesitons', function () {
     //Arrange
     //Criar algumas perguntas
@@ -65,5 +64,3 @@ it('should paginate the result', function () {
     get(route('dashboard'))
     ->assertViewHas('questions', fn ($value) => $value instanceof LengthAwarePaginator);
 });
-
-
